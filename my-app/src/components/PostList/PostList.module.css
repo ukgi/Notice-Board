@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.posts__list {
+  height: 300px;
+  padding: 0;
+}
+
+.posts__addBtn {
+  width: 200px;
+}

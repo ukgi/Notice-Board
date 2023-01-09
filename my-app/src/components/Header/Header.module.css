@@ -1,0 +1,21 @@
+.searchBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchIcon {
+  font-size: 30px;
+  transform: translateY(-20%);
+  margin-right: 12px;
+}
+
+input {
+  background-color: inherit;
+  border: none;
+  outline: none;
+}
+
+input:focus {
+  border-bottom: 1px solid black;
+}
