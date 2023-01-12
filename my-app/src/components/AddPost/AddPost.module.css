@@ -9,12 +9,29 @@ input {
 }
 
 textarea {
-  width: 320px;
-  height: 200px;
+  width: 420px;
+  height: 400px;
   padding: 10px;
   box-sizing: border-box;
   border-radius: 5px;
   font-size: 16px;
   resize: both;
   outline: none;
+}
+
+textarea::-webkit-scrollbar {
+  width: 15px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background-color: var(--color-scrollThumb);
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+textarea::-webkit-scrollbar-track {
+  background-color: var(--color-scrollbar);
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
 }

@@ -14,6 +14,24 @@
 .posts__list {
   height: 300px;
   padding: 0;
+  overflow: auto;
+}
+
+.posts__list::-webkit-scrollbar {
+  width: 15px;
+}
+
+.posts__list::-webkit-scrollbar-thumb {
+  background-color: var(--color-scrollThumb);
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+.posts__list::-webkit-scrollbar-track {
+  background-color: var(--color-scrollbar);
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
 }
 
 .posts__addBtn {

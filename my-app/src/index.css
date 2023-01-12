@@ -5,7 +5,8 @@
   --color-text: #22243b;
   --color-accent: #f16e03;
   --color-white: white;
-  --color-scrollbar: #aaa7a7;
+  --color-scrollbar: #e4e4e4;
+  --color-scrollThumb: #8070d4;
 }
 
 body {

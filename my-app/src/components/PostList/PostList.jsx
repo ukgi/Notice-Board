@@ -1,15 +1,20 @@
 import { Button } from "@mui/material";
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AddPost from "../AddPost/AddPost";
 import Header from "../Header/Header";
 import Post from "../Post/Post";
 import styles from "./PostList.module.css";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { PersonalVideoRounded } from "@mui/icons-material";
 
 export default function PostList() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(() => readPostsFromLocalStorage());
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("posts", JSON.stringify(posts));
+  }, [posts]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -46,20 +51,49 @@ export default function PostList() {
     post.title.toLowerCase().includes(search)
   );
 
+  const handleDropChange = (result) => {
+    if (!result.destination) return;
+    console.log(result);
+    const items = [...posts];
+    const [reorderedPosts] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedPosts);
+    setPosts(items);
+  };
+
   return (
     <div className={styles.container}>
       <Header search={search} handleSearch={handleSearch} />
       <section className={styles.posts}>
-        <ol className={styles.posts__list}>
-          {searched.map((post) => (
-            <Post
-              key={post.id}
-              post={post}
-              handleDeletePost={handleDeletePost}
-              handleChange={handleChange}
-            />
-          ))}
-        </ol>
+        <DragDropContext onDragEnd={handleDropChange}>
+          <Droppable droppableId='posts'>
+            {(provided) => (
+              <ul
+                className={styles.posts__list}
+                {...PersonalVideoRounded.droppableProps}
+                ref={provided.innerRef}
+              >
+                {searched.map((post, index) => (
+                  <Draggable
+                    key={post.id.toString()}
+                    draggableId={post.id.toString()}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <Post
+                        key={post.id}
+                        post={post}
+                        handleDeletePost={handleDeletePost}
+                        handleChange={handleChange}
+                        provided={provided}
+                      />
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </ul>
+            )}
+          </Droppable>
+        </DragDropContext>
         <Button
           className={styles.posts__addBtn}
           variant='contained'
@@ -77,4 +111,10 @@ export default function PostList() {
       </section>
     </div>
   );
+}
+
+function readPostsFromLocalStorage() {
+  console.log("로컬 스토리지로부터 데이터를 가져옵니다");
+  const posts = localStorage.getItem("posts");
+  return posts ? JSON.parse(posts) : [];
 }

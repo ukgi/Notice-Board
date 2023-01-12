@@ -6,7 +6,12 @@ import styles from "./Post.module.css";
 import OpenPost from "./OpenPost";
 import Edit from "../Edit/Edit";
 
-export default function Post({ post, handleDeletePost, handleChange }) {
+export default function Post({
+  post,
+  handleDeletePost,
+  handleChange,
+  provided,
+}) {
   const { title, content, id } = post;
   const [isOpen, setIsOpen] = useState(false);
   const [isEdit, setEdit] = useState(false);
@@ -25,7 +30,12 @@ export default function Post({ post, handleDeletePost, handleChange }) {
 
   return (
     <>
-      <li className={styles.post}>
+      <li
+        className={styles.post}
+        ref={provided.innerRef}
+        {...provided.dragHandleProps}
+        {...provided.draggableProps}
+      >
         <button className={styles.postTitle} onClick={handleOpenPost}>
           {title}
         </button>
